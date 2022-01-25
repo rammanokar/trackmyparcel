@@ -120,6 +120,7 @@ func trackDelhivery(args []string, detailed bool) {
 	if !detailed {
 		reportLines = len(scans) - 4
 	}
+	var previousScanLocation string
 	for i := len(scans) - 1; i >= reportLines; i-- {
 		time, err := time.Parse(layout, scans[i].ScanDateTime)
 		if err != nil {
@@ -128,6 +129,10 @@ func trackDelhivery(args []string, detailed bool) {
 		scanstatus := strings.ToLower(scans[i].Scan)
 		var status string
 		switch {
+		case strings.Contains(scanstatus, "delivered"):
+			status = "🙌..It's Delivered"
+		case strings.Contains(scanstatus, "dispatched"):
+			status = "🏠...Out for Delivery"
 		case strings.Contains(scanstatus, "pending"):
 			status = "⌛...Pending"
 		case strings.Contains(scanstatus, "transit"):
@@ -135,8 +140,12 @@ func trackDelhivery(args []string, detailed bool) {
 		case strings.Contains(scanstatus, "manifest"):
 			status = "📒...Booked"
 		}
-		result := fmt.Sprint(time.Format(layout1), " @ ", scans[i].ScannedLocation, scans[i].Instructions, ".........................................")
-		fmt.Println(result[:100], status)
+		if previousScanLocation != scans[i].ScannedLocation {
+			fmt.Println("Location:", scans[i].ScannedLocation)
+			previousScanLocation = scans[i].ScannedLocation
+		}
+		result := fmt.Sprint(time.Format(layout1), " - ", scans[i].Instructions, "...............................................................................................")
+		fmt.Println("    ",result[:100], status)
 
 	}
 
