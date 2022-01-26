@@ -4,7 +4,8 @@ Simple to track parcel status in cli, suitable for cli persons those who hate to
 
 This tool designed using cobra, so bash,zsh and fish completion enabled by default. 
 
-![image](https://user-images.githubusercontent.com/14888257/150695134-e69266be-717f-4b4c-bc6f-835a9fe064e3.png)
 
+
+![image](https://user-images.githubusercontent.com/14888257/151182550-1792a7a1-3e26-4efe-baf4-08da68a59b4e.png)
 
 
